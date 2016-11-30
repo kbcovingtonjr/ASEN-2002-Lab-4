@@ -79,18 +79,23 @@ Cl = Cn .* cos(angle) - Ca .* sin(angle);
 Cd = Cn .* sin(angle) - Ca .* cos(angle);
 
 
-%% Plot data
-
-% Plot Cl and Cd
 figure;
 hold on;
 plot(angle,Cl)
 plot(angle,Cd)
 
 
+%% Plot data
+
+
+
 %% Error analysis
 
 
+%% Equation for CL
+% function CL = findCL(x1, density, velocity, c)
+%     CL = 
+% end
 
 
 %% Equation for Cn

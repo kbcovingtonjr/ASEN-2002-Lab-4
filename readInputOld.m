@@ -15,16 +15,18 @@ function outputData = readInput()
 addpath('WindTunnelData');
 
 %% Define input files
-inputFiles = cell(10,1); % Allocate cell array for file names
+
+inputFiles = cell(30,1); % Allocate cell array for file names
 count = 1;
 
 % Generate file names of group test data
-for group = 1:9
-    inputFiles{count} = ['AirfoilPressure_S013_G0' num2str(group)...
-        '_LA.csv'];
-    count = count + 1;
+for sec = 1:3
+    for group = 1:10
+        inputFiles{count} = ['AirfoilPressure_S01' num2str(sec) '_G0'...
+            num2str(group) '.csv'];
+        count = count + 1;
+    end
 end
-inputFiles{10} = 'AirfoilPressure_S013_G10_LA.csv'; % they suck at consistent naming
 % disp(inputFiles); % Display generated file names
 
 
@@ -60,13 +62,22 @@ for file = 1:numFiles
 end
 close(w); % close progress bar
 
+% Replace all unfilled data with NaN - for averaging purposes
+avgGroupData(avgGroupData == 0) = NaN;
 
-data = avgGroupData(:,:,1:10);
+% Divide data based on section number (e.g. 011, 012, 013)
+sec011Data = avgGroupData(:,:,1:10);
+sec012Data = avgGroupData(:,:,11:20);
+sec013Data = avgGroupData(:,:,21:30);
+
+% Average data across sections
+secAllData(:,:,:,1) = sec011Data;
+secAllData(:,:,:,2) = sec012Data;
+secAllData(:,:,:,3) = sec013Data;
+data = mean(secAllData,4,'omitnan');
 
 % Sort data based on incidence angle
-data = vertcat(data(:,:,1), data(:,:,2), data(:,:,3), data(:,:,4),...
-    data(:,:,5), data(:,:,6), data(:,:,7), data(:,:,8), data(:,:,9),...
-    data(:,:,10));
+data = vertcat(data(:,:,1), data(:,:,2), data(:,:,3));
 data = sortrows(data,23);
 
 % Sort data into 3 arrays based on airspeed
@@ -76,7 +87,5 @@ data30 = data(3:3:end,:);   % data collected at 30 m/s
 
 %% Return extracted data
 outputData = {data10, data20, data30};
-
-
 
 end
