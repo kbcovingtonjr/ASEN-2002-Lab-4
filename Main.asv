@@ -7,8 +7,7 @@
 % Housekeeping
 clear all; close all; clc;
 
-
-%% Define Airfoil
+%% Definitions
 
 c = 3.5 * 0.0254; % chord length [m]
 
@@ -51,7 +50,6 @@ ELD_Y= data(:,28,:);          % uhhhhhhhhhh
 
 angleR = angleDeg*pi/180; % changing degrees to radians for calculations
 
-
 %% Calculations
 
 % Calculate Cp values
@@ -89,7 +87,6 @@ plot(angleDeg(:,:,3),Cl(:,:,3),'-*');
 title('Lift Coefficient');
 xlabel('Angle of Attack (degrees)');
 ylabel('Cl');
-legend('10 m/s', '20 m/s', '30 m/s', 'location', 'southeast');
 
 % Plot Cd vs. angle of attack
 subplot(1,2,2);
@@ -100,7 +97,7 @@ plot(angleDeg(:,:,3),Cd(:,:,3),'-*');
 title('Drag Coefficient');
 xlabel('Angle of Attack (degrees)');
 ylabel('Cd');
-legend('10 m/s', '20 m/s', '30 m/s', 'location', 'southeast');
+
 
 
 %% Equation for Cn
