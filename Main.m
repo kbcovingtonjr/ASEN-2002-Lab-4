@@ -1,7 +1,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 
 % This script is used in the data analysis of ASEN 2002 Aero Lab #2.
+% -It reads in data taken in a low-speed subsonic wind tunnel including
+% pressure distributions across an airfoil.
+% -It then calculates axial coefficients and then lift and drag
+% coefficients.
+% -It then plots this data, similarly to NACA airfoil data.
 % 
+% Author: Keith Covington
+% Created: 11/09/2016
+% Modified: 12/06/2016
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Housekeeping
