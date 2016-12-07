@@ -80,13 +80,12 @@ for speed = 1:length(inputData)
     end
 end
 
-% Evaluate extrapolations at chord length to find theoretical pressures
 topEval = topLinear(:,1,:)*c + topLinear(:,2,:);
 botEval = botLinear(:,1,:)*c + botLinear(:,2,:);
-theoPressures = mean([topEval botEval],2);
+theoPressVals = mean([topEval botEval],2);
 
 % Add theoretical values to Cp matrix
-Cp1 = [Cp1(:,1:9,:) theoPressures Cp1(:,10:end,:)];
+Cp1 = [Cp1(:,1:9,:) theoreticalVals Cp1(:,10:end,:)];
 Cp2 = circshift(Cp1,-1,2);
 
 % Resize some shtuff to work for Cn and Ca calculations
@@ -132,9 +131,9 @@ xlabel('Angle of Attack (degrees)');
 ylabel('Cd');
 legend('10 m/s', '20 m/s', '30 m/s', 'location', 'southeast');
 
-% Just testing out graphing Cp vs. x-position
-% figure(2)
-% plot(x_scaled,Cp1(1,:,1));
+% Just testing out graphing 
+figure(2)
+plot(x_scaled,Cp1(1,:,1));
 
 
 %% Equation for Cn
