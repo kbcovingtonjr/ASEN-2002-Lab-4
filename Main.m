@@ -9,7 +9,7 @@
 % 
 % Author: Keith Covington
 % Created: 11/09/2016
-% Modified: 12/06/2016
+% Modified: 12/08/2016
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Housekeeping
@@ -68,11 +68,10 @@ ELD_Y= data(:,28,:);          % uhhhhhhhhhh
 
 angleR = angleDeg*pi/180; % changing degrees to radians for calculations
 
-
 %% Calculations
 
 % Calculate Cp values
-Cp1 = findCP(presPorts, Patm, Ppitot);
+Cp1 = findCP(presPorts, Ppitot);
 
 % Extrapolate Cp values to find theoretical Cp value at theoretical port 11
 [rows, ~] = size(presPorts);
@@ -112,6 +111,16 @@ Ca = findCa(Cp1, Cp2, y1, y2, c);
 Cl = Cn .* cos(angleR) - Ca .* sin(angleR);
 Cd = Cn .* sin(angleR) + Ca .* cos(angleR);
 
+% 0.3205
+% 3.002
+% 6.9553
+
+% Find maximums on Cl and angle at which it occurs
+maxCl = max(Cl)
+angleMaxCl = angleDeg(find(Cl == maxCl))
+
+minCd = min(Cd)
+angleMinCl = angleDeg(find(Cd == minCd))
 
 %% Plot data
 
@@ -140,9 +149,58 @@ xlabel('Angle of Attack (degrees)');
 ylabel('Cd');
 legend('10 m/s', '20 m/s', '30 m/s', 'location', 'southeast');
 
-% Just testing out graphing Cp vs. x-position
-% figure(2)
-% plot(x_scaled,Cp1(1,:,1));
+
+% Plotting Cp graphs
+Cp1 = [Cp1 Cp1(:,1,:)];
+x_scaled = [x_scaled x_scaled(1)];
+
+angles = [1 9 15 25 30];
+
+for i = 1:length(angles)
+    disp(['At ' num2str(angleDeg(angles(i))) ' Degrees:']);
+    disp(['Cl is ' num2str(Cl(angles(i),:,:))]);
+    disp(['Cd is ' num2str(Cd(angles(i),:,:))]);
+    
+    figure(i+1)
+    hold on;
+    plot(x_scaled/c,Cp1(angles(i),:,1),'-o');
+    plot(x_scaled/c,Cp1(angles(i),:,2),'-o');
+    plot(x_scaled/c,Cp1(angles(i),:,3),'-o');
+    set(gca, 'Ydir', 'reverse');
+    title(['Cp Over Chord at ' num2str(angleDeg(angles(i))) ' Degrees']);
+    legend('10 m/s', '20 m/s', '30 m/s');
+    xlabel('Normalized Chord Length');
+    ylabel('Cp'); 
+end
+
+
+% Plotting NACA data vs ours
+angle_NACA = -8:2:30;
+Cl_NACA = [-.13 0.01 0.19 0.33 0.48 0.62 0.78 0.90 1.08 1.19 1.30 1.42...
+    1.51 1.60 1.57 1.51 1.45 1.38 1.29 1.14];
+Cd_NACA = [0.015 0.014 0.015 0.019 0.022 0.037 0.046 0.059 0.078 0.097...
+    0.118 0.14 0.169 0.199 0.242 0.319 0.369 0.416];
+
+figure
+subplot(1,2,1);
+hold on;
+plot(angleDeg(:,:,2),Cl(:,:,2),'-*');
+plot(angle_NACA,Cl_NACA,'-*');
+title('Lift Coefficient');
+xlabel('Angle of Attack (degrees)');
+ylabel('Cl');
+legend('Our data @ 20 m/s', 'NACA data', 'location', 'southeast');
+
+% Plot Cd vs. angle of attack
+subplot(1,2,2);
+hold on
+plot(angleDeg(:,:,2),Cd(:,:,2),'-*');
+plot(angle_NACA(1:end-2),Cd_NACA,'-*');
+title('Drag Coefficient');
+xlabel('Angle of Attack (degrees)');
+ylabel('Cd');
+legend('Our data @ 20 m/s', 'NACA data', 'location', 'southeast');
+
 
 
 %% Equation for Cn
@@ -158,6 +216,6 @@ function Ca = findCa(cp1, cp2, y1, y2, c)
 end
 
 %% Equation for CP
-function Cp = findCP(P, Pinf, q)
-    Cp = (P-Pinf) ./ q;
+function Cp = findCP(P, q)
+    Cp = P ./ q;
 end
