@@ -1,5 +1,8 @@
 function outputData = readInput()
 % function data = readInput()
+%
+% This file is now outdated. The Main.m now calls readInput.m becuase of
+% a faulty pressure transducer settup. The data had to be retaken.
 % 
 % Reads in the data from the wind tunnel experiements
 % performed in ASEN 2002 Aero Lab #2.
