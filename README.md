@@ -5,6 +5,7 @@ After taking data on an airfoil in a low-speed subsonic wind tunnel here at CU B
 
 The goal was to find the coefficients of lift and drag for a Clark Y-14 airfoil.
 
+![Graphs](/ClCdGraphs.jpg?raw=true "Graphsss")
 
 More In-Depth
 ------
