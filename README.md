@@ -4,8 +4,15 @@ Wind Tunnel Lab
 After taking data on an airfoil in a low-speed subsonic wind tunnel here at CU Boulder, I wrote this code to analyze my data in conjunction with all of the data taken by my class.
 
 The goal was to find the coefficients of lift and drag for a Clark Y-14 airfoil.
+![ClCdGraphs](/ClCdGraphs.jpg?raw=true "ClCdGraphs")
 
-![Graphs](/ClCdGraphs.jpg?raw=true "Graphsss")
+
+This is compared to the official NACA data for the airfoil.
+![NACAcomparison](/NACA_comparison.jpg?raw=true "NACA data comparison")
+
+
+In addition, I plotted the pressure distribution across the airfoil.
+![PressureDistribution](/pressure_distribution.jpg?raw=true "Pressure distribution")
 
 More In-Depth
 ------
