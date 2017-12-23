@@ -1,4 +1,4 @@
-Wind Tunnel Lab
+NACA Y-14 Analysis
 ------
 
 After taking data on an airfoil in a low-speed subsonic wind tunnel here at CU Boulder, I wrote this code to analyze my data in conjunction with all of the data taken by my class.
